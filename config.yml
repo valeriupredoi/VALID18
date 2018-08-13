@@ -1,0 +1,18 @@
+log_level: info
+variables:  # list all variables here
+
+  VARNAME1:  # name your variable whatever you want BUT dont use underscores (NOT going through CMOR)
+    analysis_type: zonal_mean_longitude  # lat_lon, zonal_mean_longitude, zonal_mean_latitude
+    control_model: CTRLSUITE  # name of control suite
+    control_model_file: /home/users/valeriu/u-ar766a/  # root of files control suite
+    exper_model: EXPSUITE  # name of experiment suite
+    exper_model_file: /home/users/valeriu/u-ar766a/  # root of files exper suite
+    control_suite_name: ar766a  # without u-
+    exper_suite_name: ar766a  # without u-
+    stream: apm
+    stash_code: m01s00i507
+    plot_dir: /home/users/valeriu/VALID_TEST/OUTPUT  # where output will live
+    path_type: jasmin
+    seasonal_analysis: True  # if seasonal analysis; for lat_lon set to False
+    years_range: [1850, 1850]  # years range for analysis
+    reuse_cubes: True  # set to True when the nc files already exist
