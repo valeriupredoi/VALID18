@@ -169,11 +169,11 @@ def coordinate_collapse(data_set, short_name, cfg):
                 data_set.data, mask=(mask_cube.data == 0))
 
     # if zonal mean on LON
-    if analysis_type == 'zonal_mean_longitude':
+    if analysis_type == 'zonal_mean':
         data_set = data_set.collapsed('longitude', iris.analysis.MEAN)
 
     # if zonal mean on LAT
-    if analysis_type == 'zonal_mean_latitude':
+    if analysis_type == 'meridional_mean':
         data_set = data_set.collapsed('latitude', iris.analysis.MEAN)
 
     # if vertical mean
@@ -241,11 +241,11 @@ def plot_ctrl_exper(ctrl, exper, cfg, plot_key, short_name):
     if cfg['variables'][short_name]['analysis_type'] == 'lat_lon':
         plot_latlon_cubes(ctrl, exper, cfg, plot_key, short_name)
     elif cfg['variables'][short_name][
-            'analysis_type'] == 'zonal_mean_longitude':
+            'analysis_type'] == 'zonal_mean':
         plot_info = [plot_key, 'latitude', 'alltime']
         plot_zonal_cubes(ctrl, exper, cfg, plot_info, short_name)
     elif cfg['variables'][short_name][
-            'analysis_type'] == 'zonal_mean_latitude':
+            'analysis_type'] == 'meridional_mean':
         plot_info = [plot_key, 'longitude', 'alltime']
         plot_zonal_cubes(ctrl, exper, cfg, plot_info, short_name)
 
@@ -254,12 +254,12 @@ def plot_ctrl_exper_seasons(ctrl_seasons, exper_seasons, cfg, plot_key,
                             short_name):
     """Call plotting functions and make plots with seasons"""
     seasons = ['DJF', 'MAM', 'JJA', 'SON']
-    if cfg['variables'][short_name]['analysis_type'] == 'zonal_mean_longitude':
+    if cfg['variables'][short_name]['analysis_type'] == 'zonal_mean':
         for c_i, e_i, s_n in zip(ctrl_seasons, exper_seasons, seasons):
             plot_info = [plot_key, 'latitude', s_n]
             plot_zonal_cubes(c_i, e_i, cfg, plot_info, short_name)
     elif cfg['variables'][short_name][
-            'analysis_type'] == 'zonal_mean_latitude':
+            'analysis_type'] == 'meridional_mean':
         for c_i, e_i, s_n in zip(ctrl_seasons, exper_seasons, seasons):
             plot_info = [plot_key, 'longitude', s_n]
             plot_zonal_cubes(c_i, e_i, cfg, plot_info, short_name)

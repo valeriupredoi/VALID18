@@ -2,7 +2,7 @@ log_level: info
 variables:  # list all variables here
 
   VARNAME1:  # name your variable whatever you want BUT dont use underscores (NOT going through CMOR)
-    analysis_type: zonal_mean_longitude  # lat_lon, zonal_mean_longitude, zonal_mean_latitude
+    analysis_type: zonal_mean  # lat_lon, zonal_mean, meridional_mean
     control_model: CTRLSUITE  # name of control suite
     control_model_file: /home/users/valeriu/u-ar766a/  # root of files control suite
     exper_model: EXPSUITE  # name of experiment suite
