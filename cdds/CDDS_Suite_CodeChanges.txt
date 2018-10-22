@@ -1,0 +1,13 @@
+=== 1 ===
+command: create_cdds_directory_structure request.json
+/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_prepare-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_prepare/model_config.py
+l.12:
+import sys
+sys.path.append('/apps/contrib/metomi/rose-2018.06.0/lib/python')
+
+=== 2 ===
+command: same as 1
+/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/hadsdk-2.0.4.dev0+trunk.r4325-py2.7.egg/hadsdk/config.py
+l.12 change from: ROOT_CONFIG = '/project/cdds/config/'
+to
+ROOT_CONFIG = '/home/users/valeriu'

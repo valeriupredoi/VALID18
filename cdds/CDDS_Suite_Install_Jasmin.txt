@@ -16,7 +16,7 @@ svn checkout https://code.metoffice.gov.uk/svn/cdds/main/trunk/cdds_transfer cdd
 >>> Checked out revision 4325.
 svn checkout https://code.metoffice.gov.uk/svn/cdds/main/trunk/cdds_configure cdds_configure
 >>> Checked out revision 4326.
-svn checkout https://code.metoffice.gov.uk/svn/cdds/config/trunk/CMIP6/v0.6.0 CONFIG_CMIP6
+svn checkout https://code.metoffice.gov.uk/svn/cdds/config/trunk/CMIP6 CMIP6
 >>> Checked out revision 4326.
 
 Setup
