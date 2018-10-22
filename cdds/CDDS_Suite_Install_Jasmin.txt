@@ -1,0 +1,89 @@
+Installation Steps
+==================
+Svn checkout packages
+----------------------
+svn checkout https://code.metoffice.gov.uk/svn/cdds/main/trunk/cdds_convert cdds_convert
+>>> Checked out revision 4325.
+svn checkout https://code.metoffice.gov.uk/svn/cdds/main/trunk/mip_convert mip_convert
+>>> Checked out revision 4325.
+svn checkout https://code.metoffice.gov.uk/svn/cdds/main/trunk/hadsdk hadsdk
+>>> Checked out revision 4325.
+svn checkout https://code.metoffice.gov.uk/svn/cdds/main/trunk/cdds_prepare cdds_prepare
+>>> Checked out revision 4325.
+svn checkout https://code.metoffice.gov.uk/svn/cdds/main/trunk/extract extract
+>>> Checked out revision 4325.
+svn checkout https://code.metoffice.gov.uk/svn/cdds/main/trunk/cdds_transfer cdds_transfer
+>>> Checked out revision 4325.
+svn checkout https://code.metoffice.gov.uk/svn/cdds/main/trunk/cdds_configure cdds_configure
+>>> Checked out revision 4326.
+svn checkout https://code.metoffice.gov.uk/svn/cdds/config/trunk/CMIP6/v0.6.0 CONFIG_CMIP6
+>>> Checked out revision 4326.
+
+Setup
+------
+manager: Anaconda with python 2.7 (miniconda2)
+export PATH=/home/users/valeriu/miniconda2/bin:$PATH
+
+Start from creating a working environment for mip_convert:
+[valeriu@jasmin-sci2 mip_convert]$ conda create --name cdds_env --file conda_spec_file.txt
+>>> creation works fine!
+create env variables:
+(cdds_env) [valeriu@jasmin-sci2 mip_convert]$ cd ~/miniconda2/envs/cdds_env/
+mkdir -p ./etc/conda/activate.d
+mkdir -p ./etc/conda/deactivate.d
+(cdds_env) [valeriu@jasmin-sci2 cdds_env]$ vim ./etc/conda/activate.d/env_vars.sh
+(cdds_env) [valeriu@jasmin-sci2 cdds_env]$ vim ./etc/conda/deactivate.d/env_vars.sh
+Put the env vars in activate/deactivate env_vars.sh:
+```
+#!/bin/sh
+
+export UVCDAT_ANONYMOUS_LOG=no
+```
+and
+```
+#!/bin/sh
+
+unset UVCDAT_ANONYMOUS_LOG
+```
+And finally activate the environment:
+[valeriu@jasmin-sci2 mip_convert]$ source activate cdds_env
+
+Problem package dreqPy
+======================
+- dreqPy and conda:
+ (cdds_env) [valeriu@jasmin-sci2 hadsdk]$ conda install -c coecms dreqpy
+ Solving environment: failed
+ 
+ UnsatisfiableError: The following specifications were found to be in conflict:
+   - defaults/linux-64::pep8==1.7.1=py27_0
+   - dreqpy
+ Use "conda info <package>" to see the dependencies for each package.
+ 
+ Try downgrading:
+ conda install pep8=1.7.0
+ conda install cryptography-vectors=2.3.0
+ conda install enum34=1.0
+ UnsatisfiableError: The following specifications were found to be in conflict:
+   - dreqpy
+   - enum34=1.0
+ Use "conda info <package>" to see the dependencies for each package.
+ >>> giving up!
+
+Solution: get dreq from source:
+svn checkout http://proj.badc.rl.ac.uk/svn/exarch/CMIP6dreq/trunk/ CMIP6dreq
+>>> Checked out revision 1271.
+python setup.py install
+
+Export cmip6dreq_location for environment:
+export CMIP6DREQ_LOCATION=/home/users/valeriu/CMIP6dreq
+
+Problem package: rose
+======================
+Since an installation of rose is highly undesirable, just add the path for the exec
+import sys
+sys.path.append('/apps/contrib/metomi/rose-2018.06.0/lib/python')
+
+Two more deps: jinja2 and pika
+===============================
+conda install -c conda-forge pika
+conda install jinja2
