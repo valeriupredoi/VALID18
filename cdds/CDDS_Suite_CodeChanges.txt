@@ -1,13 +1,217 @@
-=== 1 ===
-command: create_cdds_directory_structure request.json
-/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_prepare-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_prepare/model_config.py
+1. command: create_cdds_directory_structure request.json
+========================================================
+
+=== a ===
+file: /home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_prepare-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_prepare/model_config.py
 l.12:
 import sys
 sys.path.append('/apps/contrib/metomi/rose-2018.06.0/lib/python')
 
-=== 2 ===
-command: same as 1
-/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/hadsdk-2.0.4.dev0+trunk.r4325-py2.7.egg/hadsdk/config.py
+=== b ===
+file: /home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/hadsdk-2.0.4.dev0+trunk.r4325-py2.7.egg/hadsdk/config.py
 l.12 change from: ROOT_CONFIG = '/project/cdds/config/'
 to
 ROOT_CONFIG = '/home/users/valeriu'
+
+=== c ===
+file: /home/users/valeriu/CMIP6/v0.5.0/general/CMIP6.cfg
+change to:
+[COMMON]
+RELEASE = v0.5.0
+CONFIG_BASE = /home/users/valeriu
+
+[locations]
+; proc root directory pathname
+procroot = /home/users/valeriu
+
+=== output ===
+Directory "/home/users/valeriu/cdds_Milestone5/test1/CMIP6/CMIP/HadGEM3-GC31-LL/piControl/r3i1p1f1/ETE5/input" already exists
+Directory "/home/users/valeriu/cdds_Milestone5/test1/CMIP6/CMIP/HadGEM3-GC31-LL/piControl/r3i1p1f1/ETE5/output" already exists
+Created "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/prepare/log"
+Created "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/extract/log"
+Created "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/configure/log"
+Created "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/convert/log"
+Created "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/qualitycheck/log"
+Created "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/archive/log"
+--- no traceback
+
+2. command: prepare_generate_variable_list request.json HadGEM3-GC31-LL 01.00.21 01.00.10 u-ar766 94339 -p
+===========================================================================================================
+
+=== a ===
+file: /home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_prepare-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_prepare/model_config.py
+in export_file_from_suite(suite_id, filename, revision):
+root_url = determine_rose_suite_url(suite_id, internal=False)
+
+=== aa ===
+prompts to password MANY times!
+
+=== b ===
+file: /home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_prepare-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_prepare/data_request_interface.py
+Fails to execute command: what is 'djq'????
+Found djq and installed it - see the Install document
+This NEEDS to be added to a README or INSTALL document !!!
+It is in the user manual for prepare but I overlooked it when building the deps tree
+
+=== output ===
+*** Starting ***
+Authentication realm: <https://code.metoffice.gov.uk:443> Met Office Code
+Password for 'valeriupredoi': ************
+
+Authentication realm: <https://code.metoffice.gov.uk:443> Met Office Code
+Password for 'valeriupredoi': ************
+
+Authentication realm: <https://code.metoffice.gov.uk:443> Met Office Code
+Password for 'valeriupredoi': ************
+
+Authentication realm: <https://code.metoffice.gov.uk:443> Met Office Code
+Password for 'valeriupredoi': ************
+
+Data request version mismatch:
+  requested:         "01.00.21"
+  retrieved:         "01.00.21"
+  model configuration: "01.00.10"
+
+*** Complete ***
+
+it created: /home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/prepare/CMIP6_CMIP_piControl_HadGEM3-GC31-LL.json
+
+3. Extending request.json
+===========================
+(cdds_env) [valeriu@jasmin-sci2 cdds_Milestone5]$ mv request.json request-smaller.json 
+(cdds_env) [valeriu@jasmin-sci2 cdds_Milestone5]$ vim request.json
+>>> put in the extended version from https://code.metoffice.gov.uk/trac/cdds/wiki/CDDSMilestone5Walkthrough
+>>> at step CDDS Configure point 1.
+
+4. command: cdds_configure request.json /home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/prepare/CMIP6_CMIP_piControl_HadGEM3-GC31-LL.json -t -l /home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/configure/log/cdds_configure.log -v -t -p
+==========================================================================================
+(make sure to remove all commented out lines, this is not yaml!)
+download the mip_tables:
+git clone https://github.com/PCMDI/cmip6-cmor-tables.git
+mv cmip6-cmor-tables/ 01.00.21
+replace in request.json:
+"inpath": "/home/users/valeriu/CMIP6/v0.5.0/mip_tables"
+>>> runs seemingly OK
+
+=== output ===
+[...]
+Checking whether "Omon_zsatcalc" is active
+Checking whether "AERmon_ztp" is active
+"AERmon_ztp" is active
+Producing user configuration file for "ocean-global-mean"
+Producing user configuration file for "seaice-from-atmos"
+Producing user configuration file for "ocean-native"
+Producing user configuration file for "atmos-zonal"
+Producing user configuration file for "atmos-native"
+Writing "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/configure/mip_convert.cfg.ocean-global-mean"
+Writing "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/configure/mip_convert.cfg.seaice-from-atmos"
+Writing "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/configure/mip_convert.cfg.ocean-native"
+Writing "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/configure/mip_convert.cfg.atmos-zonal"
+Writing "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/configure/mip_convert.cfg.atmos-native"
+
+
+5. command: cdds_convert -j cdds_convert.json
+==============================================
+Since we are not on CREM, we give cdds_convert a json file; my cdds_convert.json:
+
+{
+  "config_version": "0.5.0",
+  "project": "CMIP6",
+  "mip": "CMIP",
+  "experiment_name": "piControl",
+  "modelid" : "HadGEM3-GC31-LL",
+  "variantid": "r3i1p1f1",
+  "procdir": "/home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5",
+  "basepath" : "/home/users/valeriu" ,
+  "streamdata": [
+      {"stream" : "ap4", "start_date" : "1850-01-01T0000Z", "end_date":"1860-01-01T0000Z", "skip": 0},
+      {"stream" : "inm", "start_date" : "1850-01-01T0000Z", "end_date":"1860-01-01T0000Z", "skip": 0}
+  ],
+  "suite_id": "u-ar766",
+  "start_date": "1850-01-01T0000Z",
+  "end_date": "1860-01-01T0000Z"
+}
+
+=== output ===
+
+(cdds_env) [valeriu@jasmin-sci2 cdds_Milestone5]$ cdds_convert -j cdds_convert.json 
+*** Starting log***
+Loading information from JSON file "cdds_convert.json"
+Loading cdds config file "/home/users/valeriu/CMIP6/cdds.cfg"
+Obtaining general configuration for this request
+Streams including in processing: [u'ap4', u'inm']
+Checking out rose suite u-ak283 (cdds_0.5.0@83892) to /home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/convert/u-ak283_JSON
+Could not access internal repository at "svn://fcm1/roses-u.xm_svn/a/k/2/8/3/"
+Authentication realm: <https://code.metoffice.gov.uk:443> Met Office Code
+Password for 'valeriupredoi': ************
+
+Authentication realm: <https://code.metoffice.gov.uk:443> Met Office Code
+Password for 'valeriupredoi': ************
+
+Suite checkout to /home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/convert/u-ak283_JSON succeeded
+SVN version: A    /home/users/valeriu/CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/convert/u-ak283_JSON/app
+Updating rose-suite.conf entries
+*** Finished ***
+Traceback (most recent call last):
+  File "/home/users/valeriu/miniconda2/envs/cdds_env/bin/cdds_convert", line 4, in <module>
+    __import__('pkg_resources').run_script('cdds-convert==0.0.1.dev0+trunk.r4325', 'cdds_convert')
+  File "/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/pkg_resources/__init__.py", line 657, in run_script
+    self.require(requires)[0].run_script(script_name, ns)
+  File "/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/pkg_resources/__init__.py", line 1437, in run_script
+    exec(code, namespace, namespace)
+  File "/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_convert-0.0.1.dev0+trunk.r4325-py2.7.egg/EGG-INFO/scripts/cdds_convert", line 8, in <module>
+    main()
+  File "/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_convert-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_convert/command_line.py", line 110, in main
+    process.update_convert_suite_parameters()
+  File "/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_convert-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_convert/process/__init__.py", line 483, in update_convert_suite_parameters
+    'INPUT_DIR': self.input_data_path,
+  File "/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_convert-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_convert/process/__init__.py", line 281, in input_data_path
+    return os.path.join(self._data_storage_base_location,
+  File "/home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_convert-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_convert/process/__init__.py", line 270, in _data_storage_base_location
+    'package': self._request['package']}
+KeyError: 'package'
+
+Solution: add package in cdds_json:
+
+{
+  "config_version": "0.5.0",
+  "project": "CMIP6",
+  "mip": "CMIP",
+  "experiment_name": "piControl",
+  "modelid" : "HadGEM3-GC31-LL",
+  "variantid": "r3i1p1f1",
+  "procdir": "../CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/",
+  "package": "ETE5",
+  "basepath" : "/home/users/valeriu" ,
+  "streamdata": [
+      {"stream" : "ap4", "start_date" : "1850-01-01T0000Z", "end_date":"1860-01-01T0000Z", "skip": 0},
+      {"stream" : "inm", "start_date" : "1850-01-01T0000Z", "end_date":"1860-01-01T0000Z", "skip": 0}
+  ],
+  "suite_id": "u-ar766",
+  "start_date": "1850-01-01T0000Z",
+  "end_date": "1860-01-01T0000Z"
+}
+
+and pass dictionary member: in /home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_convert-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_convert/process/__init__.py l.92:
+self._request['package'] = data['package']
+
+new complaint:
+
+RuntimeError: Sizing file "/home/users/valeriu/CMIP6/v0.5.0/general/sizing_HadGEM3-GC31-LL.json" not found
+
+create one:
+vim /home/users/valeriu/CMIP6/v0.5.0/general/sizing_HadGEM3-GC31-LL.json
+{
+  "variable_shape": {
+    "default/mon": 50,
+    "360-330/mon": 25,
+    "default/6hrPt": 1
+  }
+}
+
+(used example from https://code.metoffice.gov.uk/doc/cdds/cdds_convert/user_guide.html#example-json-input-file)
+
+new complaint:
+
+cdds_convert.exceptions.SuiteConfigMissingValueError: Field "SIZING_FILE" not found in "../CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/convert/u-ak283_JSON/rose-suite.conf".
+

@@ -147,6 +147,7 @@ dependencies:
     - cdds-convert==0.0.1.dev0+trunk.r4325
     - cdds-prepare==0.0.1.dev0+trunk.r4325
     - cdds-transfer==1.0.0.dev0+trunk.r4325
+    - djq==0.0
     - dreqpy==1.0.28
     - extract==1.0.1.dev0+trunk.r4325
     - hadsdk==2.0.4.dev0+trunk.r4325

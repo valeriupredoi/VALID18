@@ -70,8 +70,10 @@ Problem package dreqPy
  >>> giving up!
 
 Solution: get dreq from source:
-svn checkout http://proj.badc.rl.ac.uk/svn/exarch/CMIP6dreq/trunk/ CMIP6dreq
+svn checkout http://proj.badc.rl.ac.uk/svn/exarch/CMIP6dreq CMIP6dreq
 >>> Checked out revision 1271.
+(attention: the whole directory needs to be checked out)
+(attention: tags/ contails a gazillion files - can we do without it?)
 python setup.py install
 
 Export cmip6dreq_location for environment:
@@ -87,3 +89,11 @@ Two more deps: jinja2 and pika
 ===============================
 conda install -c conda-forge pika
 conda install jinja2
+
+Problem executable: djq
+=======================
+git clone https://github.com/MetOffice/cmip6-dreq-interface.git CMIP6dreq-interface
+cd CMIP6dreq-interface
+python setup.py install
+which djq
+~/miniconda2/envs/cdds_env/bin/djq
