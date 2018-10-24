@@ -215,3 +215,59 @@ new complaint:
 
 cdds_convert.exceptions.SuiteConfigMissingValueError: Field "SIZING_FILE" not found in "../CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/convert/u-ak283_JSON/rose-suite.conf".
 
+Fix to this problem: in /home/users/valeriu/CMIP6/v0.5.0/general/CMIP6.cfg
+
+change suite versioning to:
+
+[convert]
+rose_suite = u-ak283
+rose_suite_branch = trunk@94456
+
+with versioning fixed, now the rose-suite.conf is nicely edited automatically and looks good:
+
+[jinja2:suite.rc]
+ACTIVE_STREAMS = ["ap4", "inm"]
+CONCATENATE = "TRUE"
+CYCLING_FREQUENCIES = {"ap8": "P1Y", "ap9": "P1Y", "onm": "P2Y", "ap6": "P1Y", "ap7": "P1M", "ap4": "P5Y", "ap5": "P5Y", "inm": "P5Y", "ond": "P1Y", "ind": "P1Y", "apu": "P5Y"}
+DUMMY_RUN = "FALSE"
+FINAL_YEAR = 1859
+FIRST_YEAR = 1850
+REF_YEAR = 1850
+INPUT_DIR = "/home/users/valeriu/CMIP6/CMIP/HadGEM3-GC31-LL/piControl/r3i1p1f1/ETE5/input"
+LOCATION = "SPICE"
+MEMORY = "20000"
+MIP_CONVERT_CONFIG_DIR = "../CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/configure"
+OUTPUT_DIR = "/home/users/valeriu/CMIP6/CMIP/HadGEM3-GC31-LL/piControl/r3i1p1f1/ETE5/output"
+PARALLEL_TASKS = "30"
+NTHREADS_CONCATENATE = "1"
+CDDS_DIR = ""
+SIZING_FILE = "/home/users/valeriu/CMIP6/v0.5.0/general/sizing_HadGEM3-GC31-LL.json"
+STREAM_COMPONENTS = {"inm": ["ocean-native"], "ap4": ["atmos-native", "atmos-zonal"]}
+STREAM_TIME_OVERRIDES = {"inm": "None", "ap4": "None"}
+TARGET_SUITE_NAME = "u-ar766"
+WALL_TIME = "6:00:00"
+
+Submission to LOTUS
+On Jasmin, make sure the MO environment is set: export PATH=/apps/contrib/metomi/bin:$PATH
+
+Suite will submit OK:
+
+Suggest adding logging message with the explicit rose command eg:
+rose suite-run --no-gcontrol -C ../CMIP6/CMIP/piControl/HadGEM3-GC31-LL_piControl_r3i1p1f1/ETE5/convert/u-ak283_JSON -v
+
+- that can be added in /home/users/valeriu/miniconda2/envs/cdds_env/lib/python2.7/site-packages/cdds_convert-0.0.1.dev0+trunk.r4325-py2.7.egg/cdds_convert/process/suite_interface.py around line 150
+
+Excerpt of cylc stdout:
+[INFO]   + setup_output_dir_ap4.18500101T0000Z ok
+[INFO]   + mip_concatenate_batch_inm.18591230T0000Z ok
+[INFO]   + finaliser_inm.18500101T0000Z ok
+[INFO]   + mip_concatenate_setup_ap4.18591230T0000Z ok
+[INFO]   + mip_convert_inm_ocean-native.18500101T0000Z ok
+[INFO]   + mip_concatenate_setup_inm.18591230T0000Z ok
+[INFO]   + mip_convert_ap4_atmos-zonal.18500101T0000Z ok
+[INFO]   + organise_files_ap4.18591230T0000Z ok
+[INFO]   + mip_convert_ap4_atmos-native.18500101T0000Z ok
+[INFO]   + finaliser_ap4.18500101T0000Z ok
+[INFO]   + mip_concatenate_batch_ap4.18591230T0000Z ok
+[INFO]   + setup_output_dir_inm.18500101T0000Z ok
+[INFO]   + organise_files_inm.18591230T0000Z ok
